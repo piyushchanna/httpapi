@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<!--
+2. Create a cacheFactory and perform info, put and get operation on it.
+3. Create a cacheFactory and perform remove, remove all and destroy operation on it.
+-->
+  <title>HTTP_API_Assigment</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+
+<script type="text/javascript">
+  var mod= angular.module("MyApp",[]);
+  mod.controller("MyCtrl", function($scope, $cacheFactory){
+  $scope.keys=[];
+  $scope.cache=$cacheFactory('cacheId');  
+  $scope.put=function(key,value){
+      if(angular.isUndefined($scope.cache.get(key))){
+        $scope.cache.put(key,value);
+        $scope.keys.push(key);
+         }
+      $scope.remove = function(remCacheKey){
+          $scope.cache.remove(remCacheKey);
+        } 
+      $scope.removeAll = function(){
+          $scope.cache.removeAll();
+        } 
+      $scope.destroy = function(){
+          $scope.cache.destroy();
+        }
+  }
+});
+</script>
+ 
+  
+</head>
+<body ng-app="MyApp">
+<br>
+<form role="form">
+<div class="container" ng-controller="MyCtrl">
+<div class="form-group">
+  Key: &nbsp&nbsp<input type="text" name="key" ng-model="cacheKey" placeholder="Enter Key"><br>
+  </div>
+
+  <div class="form-group">
+  Value:<input type="text" name="value" ng-model="cacheValue" placeholder="Enter Value "><br><br>
+  </div>
+  <button type="button" ng-click="put(cacheKey, cacheValue)" class="btn btn-block btn btn-success">Save Cache</button>
+
+
+  </form>
+<hr>
+<h2>cache value</h2>
+<div ng-repeat="key in keys">
+  <span ng-bind="key"></span>:
+  <b ng-bind="cache.get(key)"></b>
+</div>
+<hr>
+<h2>cache info</h2>
+<div ng-repeat="(key,value) in cache.info()">
+   <span ng-bind="key"></span>:
+   <b ng-bind="value"></b>
+</div>
+
+<hr>
+  <h2>delete</h2>
+  <br>
+  <div>
+  <b>Enter key: </b><input type="text" name="ip2" ng-model="remCacheKey">
+  <button type="button" ng-click="remove(remCacheKey)" class="btn btn-warning">Remove</button>
+  <br><br>
+  <button type="button" ng-click="removeAll()" class="btn btn-danger">RemoveAll</button>
+  <button type="button" ng-click="destroy()" class="btn btn-danger">Destroy</button>
+  </div>
+
+
+</div>
+
+</body>
+</html>

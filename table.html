@@ -1,0 +1,17 @@
+<div class="container">
+		<h1>Fetching Json from $HTTP</h1>
+		<table class="table table-striped table-bordered">
+	      <thead>
+	      <tr class="success">
+			    <th>Color Name</th>
+	        	<th>Hexadecimal data</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      <tr ng-repeat="color in color">
+	        <td>{{color.colorName}}</td>
+			<td>{{color.hexaValue}}</td>
+	      </tr>
+	      </tbody>
+    </table>
+	</div>
